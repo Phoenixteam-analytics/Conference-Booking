@@ -74,9 +74,10 @@ def save_bookings(df):
 
 # Email-sending function
 def send_email(user_email, user_name, room, date, start_time, end_time):
-    sender_email = "19bd1a1021@gmail.com"
-    sender_password = "agvrujrctxxwcggk"
-    smtp_server = "smtp.gmail.com"
+    sender_email = "fahmad@phoenixteam.com"
+    sender_password = "qbtmrkwyspwxpbln"
+    smtp_server = "smtp-mail.outlook.com"
+    smtp_encryption = "STARTTLS"
     smtp_port = 587
 
     subject = "Conference Room Booking Confirmation"
@@ -373,8 +374,3 @@ if page == "Admin":
                 st.success("Logged out successfully.")
         else:
             st.write("No bookings found in the system.")
-
-
-
-
-
