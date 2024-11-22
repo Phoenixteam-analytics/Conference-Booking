@@ -164,7 +164,7 @@ def save_bookings(df):
 # Booking Form Section
 if page == "Book a Conference Room":
     st.image("https://phoenixteam.com/wp-content/uploads/2024/02/Phoenix-Logo.png", width=200)
-    st.image("https://iiakerala.com/wp-content/uploads/2022/05/busy-working.gif",use_container_width=True)
+    st.image("https://iiakerala.com/wp-content/uploads/2022/05/busy-working.gif",width=500)
     st.write('<h1 class="title">Book a Conference Room</h1>', unsafe_allow_html=True)
     
     with st.form("booking_form"):
