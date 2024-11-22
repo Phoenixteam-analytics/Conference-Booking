@@ -250,6 +250,7 @@ if page == "Book a Conference Room":
 # Admin Page: View all bookings with a Calendar
 # View Bookings Page
 if page == "View Bookings":
+    st.write("### Conference Booking")
     st.image("https://iiakerala.com/wp-content/uploads/2022/05/busy-working.gif")
     st.write("### View Bookings by Date")
     
