@@ -250,8 +250,8 @@ if page == "Book a Conference Room":
 # Admin Page: View all bookings with a Calendar
 # View Bookings Page
 if page == "View Bookings":
-    st.write("### View Bookings by Date")
     st.image("https://iiakerala.com/wp-content/uploads/2022/05/busy-working.gif")
+    st.write("### View Bookings by Date")
     
     # Ensure the Date column is in datetime format
     if not pd.api.types.is_datetime64_any_dtype(bookings_df["Date"]):
