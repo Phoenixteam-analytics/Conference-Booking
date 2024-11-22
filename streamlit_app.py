@@ -252,6 +252,7 @@ if page == "Book a Conference Room":
 # View Bookings Page
 if page == "View Bookings":
     st.write("### Conference Booking📆")
+    st.image("https://backdocket.com/wp-content/uploads/2020/01/About-icon.gif")
     st.write("### View Bookings by Date")
     
     # Ensure the Date column is in datetime format
