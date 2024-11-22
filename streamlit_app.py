@@ -164,7 +164,6 @@ def save_bookings(df):
 # Booking Form Section
 if page == "Book a Conference Room":
     st.image("https://phoenixteam.com/wp-content/uploads/2024/02/Phoenix-Logo.png", width=200)
-    st.image("https://iiakerala.com/wp-content/uploads/2022/05/busy-working.gif")
     st.write('<h1 class="title">Book a Conference Room</h1>', unsafe_allow_html=True)
     
     with st.form("booking_form"):
@@ -252,6 +251,7 @@ if page == "Book a Conference Room":
 # View Bookings Page
 if page == "View Bookings":
     st.write("### View Bookings by Date")
+    st.image("https://iiakerala.com/wp-content/uploads/2022/05/busy-working.gif")
     
     # Ensure the Date column is in datetime format
     if not pd.api.types.is_datetime64_any_dtype(bookings_df["Date"]):
