@@ -142,9 +142,6 @@ def is_time_slot_available(bookings_df, room, selected_date, start_datetime, end
     return True
 
 # Booking Form Section
-# Booking Form Section
-# Booking Form Section
-# Function to check if the time slot overlaps with any existing bookings
 # Function to check if the time slot overlaps with any existing bookings
 def is_time_slot_available(bookings_df, room, selected_date, start_datetime, end_datetime):
     # Filter bookings that match the room and date
@@ -181,6 +178,10 @@ if page == "Book a Conference Room":
         
         start_time = st.time_input("Start Time", value=time(11, 0))
         end_time = st.time_input("End Time", value=time(12, 0))
+
+        # Define allowed booking time range
+        min_time = time(11, 0)  # 11:00 AM
+        max_time = time(20, 0)  # 8:00 PM
 
         # Prevent zero-duration bookings
         if start_time >= end_time:
