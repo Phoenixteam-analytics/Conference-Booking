@@ -169,7 +169,7 @@ if page == "Book a Conference Room":
             user_name = st.text_input("Your Name", placeholder="Enter your full name")
             user_email = st.text_input("Your Email", placeholder="Enter your email")
         with col2:
-            selected_room = st.selectbox("Choose Room", ["Collaborate", "Innovate", "Echo","Vibe"])
+            selected_room = st.selectbox("Choose Room", ["Collaborate", "Innovate", "Echo", "Vibe"])
         with col3:
             priority = st.selectbox("Priority Level", ["Low", "Medium-Low", "Medium", "Medium-High", "High"])
 
@@ -187,67 +187,64 @@ if page == "Book a Conference Room":
         if start_time >= end_time:
             st.error("⚠️ End time must be later than start time.")
             valid_times = False
+        elif start_time < min_time or end_time > max_time:
+            st.error(f"⚠️ Booking times must be between {min_time.strftime('%H:%M')} and {max_time.strftime('%H:%M')}.")
+            valid_times = False
         else:
             start_datetime = datetime.combine(selected_date, start_time)
             end_datetime = datetime.combine(selected_date, end_time)
-
-            # Validation checks
-            valid_name = True
-            valid_email = True
             valid_times = True
-            conflict = False
 
-            if not user_name:
-                st.error("⚠️ Name cannot be empty.")
-                valid_name = False
+        # Validation checks
+        valid_name = valid_email = conflict = False
 
-            if not user_email:
-                st.error("⚠️ Email cannot be empty.")
-                valid_email = False
-            elif not is_valid_email(user_email):
-                st.error("⚠️ Please enter a valid email address.")
-                valid_email = False
+        if not user_name:
+            st.error("⚠️ Name cannot be empty.")
+            valid_name = False
+        else:
+            valid_name = True
 
-            # Check if the time slot is available
-            if not is_time_slot_available(bookings_df, selected_room, selected_date, start_datetime, end_datetime):
-                st.error("⚠️ The selected time slot is already booked for this room.")
-                conflict = True
-                valid_times = False
+        if not user_email:
+            st.error("⚠️ Email cannot be empty.")
+            valid_email = False
+        elif not is_valid_email(user_email):
+            st.error("⚠️ Please enter a valid email address.")
+            valid_email = False
+        else:
+            valid_email = True
 
-            submit_button = st.form_submit_button("Book Room")
+        # Check if the time slot is available
+        if valid_times and not is_time_slot_available(bookings_df, selected_room, selected_date, start_datetime, end_datetime):
+            st.error("⚠️ The selected time slot is already booked for this room.")
+            conflict = True
+            valid_times = False
 
-            if submit_button and valid_name and valid_email and valid_times and not conflict:
-                # Proceed with booking if valid
-                new_booking = {
-                    "User": user_name,
-                    "Email": user_email,
-                    "Date": selected_date,
-                    "Room": selected_room,
-                    "Priority": priority,
-                    "Description": description,
-                    "Start": start_datetime,
-                    "End": end_datetime
-                }
+        submit_button = st.form_submit_button("Book Room")
 
-                # Create a DataFrame for the new booking
-                new_booking_df = pd.DataFrame([new_booking])
+        if submit_button and valid_name and valid_email and valid_times and not conflict:
+            # Proceed with booking if valid
+            new_booking = {
+                "User": user_name,
+                "Email": user_email,
+                "Date": selected_date,
+                "Room": selected_room,
+                "Priority": priority,
+                "Description": description,
+                "Start": start_datetime,
+                "End": end_datetime,
+            }
 
-                # Concatenate the new booking with the existing bookings DataFrame
-                bookings_df = pd.concat([bookings_df, new_booking_df], ignore_index=True)
+            # Add new booking to the DataFrame
+            new_booking_df = pd.DataFrame([new_booking])
+            bookings_df = pd.concat([bookings_df, new_booking_df], ignore_index=True)
 
-                # Save the updated bookings DataFrame to the CSV
-                save_bookings(bookings_df)
+            # Save the updated bookings DataFrame
+            save_bookings(bookings_df)
 
-                # Show a success message to the user
-                st.success(f"Your room has been successfully booked! A confirmation email has been sent to {user_email}.")
-                
-                # Send email confirmation to user and admin
-                send_email(user_email, user_name, selected_room, selected_date, start_datetime, end_datetime)
-
-            # If form is not valid, show an error message
-            elif submit_button and not (valid_name and valid_email and valid_times):
-                st.error("⚠️ Please ensure all fields are valid and try again.")
-
+            st.success(f"🎉 Your room has been successfully booked! A confirmation email has been sent to {user_email}.")
+            send_email(user_email, user_name, selected_room, selected_date, start_datetime, end_datetime)
+        elif submit_button:
+            st.error("⚠️ Please ensure all fields are valid and try again.")
 # Admin Page: View all bookings with a Calendar
 # View Bookings Page
 if page == "View Bookings":
