@@ -6,6 +6,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import os
 import re
+import streamlit.components.v1 as components
 
 # Admin credentials
 ADMIN_USERNAME = "admin"
@@ -357,3 +358,17 @@ if page == "Admin":
                 st.success("Logged out successfully.")
         else:
             st.write("No bookings found in the system.")
+# Load and display content based on navigation
+if page == "Privacy Policy":
+    st.title("Privacy Policy")
+    # Load and render the Privacy Policy HTML
+    with open("privacy.html", "r") as f:
+        privacy_content = f.read()
+    components.html(privacy_content, height=800, scrolling=True)
+    
+if page == "Terms of Use":
+    st.title("Terms of Use")
+    # Load and render the Terms of Use HTML
+    with open("terms.html", "r") as f:
+        terms_content = f.read()
+    components.html(terms_content, height=800, scrolling=True)            
