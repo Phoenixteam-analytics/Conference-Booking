@@ -359,16 +359,17 @@ if page == "Admin":
         else:
             st.write("No bookings found in the system.")
 # Load and display content based on navigation
-if page == "Privacy Policy":
-    st.title("Privacy Policy")
-    # Load and render the Privacy Policy HTML
-    with open("privacy.html", "r") as f:
-        privacy_content = f.read()
-    components.html(privacy_content, height=800, scrolling=True)
-    
-if page == "Terms of Use":
-    st.title("Terms of Use")
-    # Load and render the Terms of Use HTML
-    with open("terms.html", "r") as f:
-        terms_content = f.read()
-    components.html(terms_content, height=800, scrolling=True)            
+if st.experimental_get_query_params().get("page") == ["privacy"]:
+    with open("pages/privacy.html", "r", encoding="utf-8") as file:
+        privacy_content = file.read()
+    st.markdown(privacy_content, unsafe_allow_html=True)
+
+elif st.experimental_get_query_params().get("page") == ["terms"]:
+    with open("pages/terms.html", "r", encoding="utf-8") as file:
+        terms_content = file.read()
+    st.markdown(terms_content, unsafe_allow_html=True)
+
+else:
+    # Default to the main page
+    st.title("Welcome to the Reserve Space App")
+    st.write("Use this app to reserve conference spaces in your organization.")            
