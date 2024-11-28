@@ -359,16 +359,26 @@ if page == "Admin":
         else:
             st.write("No bookings found in the system.")
 # Load and display content based on navigation
-if st.experimental_get_query_params().get("page") == ["privacy"]:
-    with open("pages/privacy.html", "r", encoding="utf-8") as file:
-        privacy_content = file.read()
-    st.markdown(privacy_content, unsafe_allow_html=True)
+# Function to render HTML files
+def render_html(file_path):
+    try:
+        with open(file_path, "r", encoding="utf-8") as file:
+            content = file.read()
+        st.markdown(content, unsafe_allow_html=True)
+    except FileNotFoundError:
+        st.error("The requested page was not found.")
 
-elif st.experimental_get_query_params().get("page") == ["terms"]:
-    with open("pages/terms.html", "r", encoding="utf-8") as file:
-        terms_content = file.read()
-    st.markdown(terms_content, unsafe_allow_html=True)
+# Get the route from query parameters
+query_params = st.experimental_get_query_params()
+page = query_params.get("page", ["main"])[0]
 
+# Routing logic
+if page == "privacy":
+    st.title("Privacy Policy")
+    render_html("pages/privacy.html")
+elif page == "terms":
+    st.title("Terms of Use")
+    render_html("pages/terms.html")
 else:
     # Default to the main page
     st.title("Welcome to the Reserve Space App")
