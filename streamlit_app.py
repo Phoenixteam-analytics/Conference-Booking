@@ -359,6 +359,8 @@ if page == "Admin":
         else:
             st.write("No bookings found in the system.")
 # Load and display content based on navigation
+import streamlit as st
+
 # Function to render HTML files
 def render_html(file_path):
     try:
@@ -368,18 +370,18 @@ def render_html(file_path):
     except FileNotFoundError:
         st.error("The requested page was not found.")
 
-# Get the route from query parameters
-query_params = st.experimental_get_query_params()
-page = query_params.get("page", ["main"])[0]
+# Sidebar navigation
+st.sidebar.title("Navigation")
+page = st.sidebar.radio("Go to", ["Home", "Privacy Policy", "Terms of Use"])
 
-# Routing logic
-if page == "privacy":
+# Page routing
+if page == "Privacy Policy":
     st.title("Privacy Policy")
     render_html("pages/privacy.html")
-elif page == "terms":
+elif page == "Terms of Use":
     st.title("Terms of Use")
     render_html("pages/terms.html")
 else:
-    # Default to the main page
     st.title("Welcome to the Reserve Space App")
-    st.write("Use this app to reserve conference spaces in your organization.")            
+    st.write("Use this app to reserve conference spaces in your organization.")
+           
