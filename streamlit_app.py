@@ -67,29 +67,6 @@ else:
 def save_bookings(df):
     df.to_csv(BOOKINGS1_FILE, index=False)
 
-# Function to render HTML files
-def render_html(file_path):
-    try:
-        with open(file_path, "r", encoding="utf-8") as file:
-            content = file.read()
-        st.markdown(content, unsafe_allow_html=True)
-    except FileNotFoundError:
-        st.error("The requested page was not found. Please ensure the file exists in the correct directory.")
-
-# Navigation logic
-pages = {
-    "Home": "Welcome to the Conference Room Booking App",
-    "Book a Conference Room": "Book a Conference Room",
-    "View Bookings": "View Bookings",
-    "Admin": "Admin Dashboard",
-    "Privacy Policy": "Privacy Policy",
-    "Terms of Use": "Terms of Use"
-}
-
-# Get query parameters to determine the active page
-query_params = st.experimental_get_query_params()
-current_page = query_params.get("page", ["Home"])[0]  # Default to "Home" if no page is specified
-
 # Sidebar navigation
 st.sidebar.title("Navigation")
 for page_name in pages:
@@ -389,18 +366,4 @@ elif current_page == "Admin":
                 st.success("Logged out successfully.")
         else:
             st.write("No bookings found in the system.")
-# Page routing
-elif current_page == "Privacy Policy":
-    st.title(pages[current_page])
-    render_html("pages/privacy.html")
-elif current_page == "Terms of Use":
-    st.title("Terms of Use")
-    render_html("pages/terms.html")
-else:
-    st.title(pages["Home"])
-    st.write("Welcome to the Conference Room Booking App. Use the navigation to explore other features.")
 
-# Footer links
-st.markdown("---")
-st.markdown(f"[Privacy Policy](?page=Privacy%20Policy) | [Terms of Use](?page=Terms%20of%20Use)")
-           
