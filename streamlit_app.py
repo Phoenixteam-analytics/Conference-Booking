@@ -74,7 +74,7 @@ def render_html(file_path):
             content = file.read()
         st.markdown(content, unsafe_allow_html=True)
     except FileNotFoundError:
-        st.error("The requested page was not found.")
+        st.error("The requested page was not found. Please ensure the file exists in the correct directory.")
 
 # Navigation logic
 pages = {
@@ -396,8 +396,7 @@ elif current_page == "Privacy Policy":
     st.write(f"Current directory: {os.getcwd()}")
     st.write(f"Privacy HTML path: {os.path.abspath('pages/privacy.html')}")
 elif current_page == "Terms of Use":
-    st.experimental_set_query_params(page="Terms of Use")
-    st.title("Terms of Use")
+    st.title(pages[current_page])
     render_html("pages/terms.html")
     st.write(f"Current directory: {os.getcwd()}")
     st.write(f"Privacy HTML path: {os.path.abspath('pages/terms.html')}")
