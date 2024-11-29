@@ -48,8 +48,14 @@ st.markdown("""
         }
     </style>
 """, unsafe_allow_html=True)
+
+# Sidebar for navigation
+st.sidebar.title("Navigation")
+page = st.sidebar.radio("Choose a page:", ["View Bookings","Book a Conference Room","Admin","Privacy Policy", "Terms of Use"])
+
 # Load the bookings from CSV
 BOOKINGS1_FILE = "conference_bookings.csv"
+
 if os.path.exists(BOOKINGS1_FILE):
     bookings_df = pd.read_csv(BOOKINGS1_FILE)
     try:
@@ -67,14 +73,6 @@ else:
 def save_bookings(df):
     df.to_csv(BOOKINGS1_FILE, index=False)
 
-# Sidebar navigation
-st.sidebar.title("Navigation")
-for page_name in pages:
-    link = f"?page={page_name.replace(' ', '%20')}"
-    if page_name == current_page:
-        st.sidebar.markdown(f"**{page_name}**")
-    else:
-        st.sidebar.markdown(f"[{page_name}]({link})")
 # Email-sending function
 def send_email(user_email, user_name, room, date, start_time, end_time):
     sender_email = "fahmad@phoenixteam.com"
@@ -163,8 +161,6 @@ def save_bookings(df):
 
 # Booking Form Section
 if page == "Book a Conference Room":
-    st.title(pages[current_page])
-    st.write("Book your conference room here!")
     st.image("https://phoenixteam.com/wp-content/uploads/2024/02/Phoenix-Logo.png", width=200)
     st.write('<h1 class="title">Book a Conference Room</h1>', unsafe_allow_html=True)
     
@@ -253,8 +249,6 @@ if page == "Book a Conference Room":
 # Admin Page: View all bookings with a Calendar
 # View Bookings Page
 if page == "View Bookings":
-    st.title(pages[current_page])
-    st.write("View all bookings by date!")
     st.write("### Conference Booking📆")
     st.image("https://backdocket.com/wp-content/uploads/2020/01/About-icon.gif")
     st.write("### View Bookings by Date")
@@ -307,8 +301,6 @@ if page == "View Bookings":
 # Admin Page: Admin Login for booking management
 # Admin Page: Admin Login for booking management
 if page == "Admin":
-    st.title(pages[current_page])
-    st.write("Admin dashboard to manage bookings!")
     # Admin Authentication
     if "authenticated" not in st.session_state:
         st.session_state.authenticated = False
@@ -366,4 +358,14 @@ if page == "Admin":
                 st.success("Logged out successfully.")
         else:
             st.write("No bookings found in the system.")
+# Load and display content based on navigation
+import streamlit as st
 
+# Function to render HTML files
+def render_html(file_path):
+    try:
+        with open(file_path, "r", encoding="utf-8") as file:
+            content = file.read()
+        st.markdown(content, unsafe_allow_html=True)
+    except FileNotFoundError:
+        st.error("The requested page was not found.")
