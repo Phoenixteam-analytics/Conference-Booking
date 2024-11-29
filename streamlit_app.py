@@ -185,7 +185,9 @@ def save_bookings(df):
     df.to_csv("conference_bookings.csv", index=False)
 
 # Booking Form Section
-if page == "Book a Conference Room":
+if current_page == "Book a Conference Room":
+    st.title(pages[current_page])
+    st.write("Book your conference room here!")
     st.image("https://phoenixteam.com/wp-content/uploads/2024/02/Phoenix-Logo.png", width=200)
     st.write('<h1 class="title">Book a Conference Room</h1>', unsafe_allow_html=True)
     
@@ -273,7 +275,9 @@ if page == "Book a Conference Room":
             st.error("⚠️ Please ensure all fields are valid and try again.")
 # Admin Page: View all bookings with a Calendar
 # View Bookings Page
-if page == "View Bookings":
+elif current_page == "View Bookings":
+    st.title(pages[current_page])
+    st.write("View all bookings by date!")
     st.write("### Conference Booking📆")
     st.image("https://backdocket.com/wp-content/uploads/2020/01/About-icon.gif")
     st.write("### View Bookings by Date")
@@ -325,7 +329,9 @@ if page == "View Bookings":
 
 # Admin Page: Admin Login for booking management
 # Admin Page: Admin Login for booking management
-if page == "Admin":
+elif current_page == "Admin":
+    st.title(pages[current_page])
+    st.write("Admin dashboard to manage bookings!")
     # Admin Authentication
     if "authenticated" not in st.session_state:
         st.session_state.authenticated = False
@@ -384,11 +390,13 @@ if page == "Admin":
         else:
             st.write("No bookings found in the system.")
 # Page routing
-if page == "privacy-policy":
+elif current_page == "Privacy Policy":
+    st.title(pages[current_page])
+    render_html("pages/privacy.html")
     st.experimental_set_query_params(page="Privacy Policy")
     st.title("Privacy Policy")
     render_html("pages/privacy.html")
-elif page == "terms-of-use":
+elif current_page == "Terms of Use":
     st.experimental_set_query_params(page="Terms of Use")
     st.title("Terms of Use")
     render_html("pages/terms.html")
