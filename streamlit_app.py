@@ -359,8 +359,6 @@ if page == "Admin":
         else:
             st.write("No bookings found in the system.")
 # Load and display content based on navigation
-import streamlit as st
-
 # Function to render HTML files
 def render_html(file_path):
     try:
@@ -370,15 +368,23 @@ def render_html(file_path):
     except FileNotFoundError:
         st.error("The requested page was not found.")
 
+# Get query parameters
+query_params = st.experimental_get_query_params()
+page = query_params.get("page", ["home"])[0]
+
 # Sidebar navigation
 st.sidebar.title("Navigation")
-page = st.sidebar.radio("Go to", ["Home", "Privacy Policy", "Terms of Use"])
+pages = ["Home", "Privacy Policy", "Terms of Use"]
+page_selection = st.sidebar.radio("Go to", pages, index=pages.index(page))
+
+# Update the URL with the selected page
+st.experimental_set_query_params(page=page_selection.lower().replace(" ", "-"))
 
 # Page routing
-if page == "Privacy Policy":
+if page == "privacy-policy":
     st.title("Privacy Policy")
     render_html("pages/privacy.html")
-elif page == "Terms of Use":
+elif page == "terms-of-use":
     st.title("Terms of Use")
     render_html("pages/terms.html")
 else:
