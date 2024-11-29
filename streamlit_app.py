@@ -376,12 +376,15 @@ if page == "Admin":
             st.write("No bookings found in the system.")
 # Page routing
 if page == "privacy-policy":
+    st.experimental_set_query_params(page="Privacy Policy")
     st.title("Privacy Policy")
     render_html("pages/privacy.html")
 elif page == "terms-of-use":
+    st.experimental_set_query_params(page="Terms of Use")
     st.title("Terms of Use")
     render_html("pages/terms.html")
 else:
+    st.experimental_set_query_params(page="Home")
     st.title("Welcome to the Reserve Space App")
     st.write("Use this app to reserve conference spaces in your organization.")
            
