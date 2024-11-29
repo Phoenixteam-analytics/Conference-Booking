@@ -57,18 +57,6 @@ def render_html(file_path):
     except FileNotFoundError:
         st.error("The requested page was not found.")
 
-# Get query parameters
-query_params = st.experimental_get_query_params()
-page = query_params.get("page", ["View Bookings"])[0]
-
-# Sidebar for navigation
-st.sidebar.title("Navigation")
-page = st.sidebar.radio("Choose a page:", ["View Bookings","Book a Conference Room","Admin","Privacy Policy", "Terms of Use"])
-page_selection = st.sidebar.radio("Go to", pages, index=pages.index(page))
-
-# Update the URL with the selected page
-st.experimental_set_query_params(page=page_selection.lower().replace(" ", "-"))
-
 # Load the bookings from CSV
 BOOKINGS1_FILE = "conference_bookings.csv"
 
@@ -88,6 +76,18 @@ else:
 # Save bookings to the CSV file
 def save_bookings(df):
     df.to_csv(BOOKINGS1_FILE, index=False)
+
+# Sidebar Navigation with Query Parameters
+query_params = st.experimental_get_query_params()
+page = query_params.get("page", ["home"])[0]
+
+# Sidebar navigation
+st.sidebar.title("Navigation")
+pages = ["Home", "View Bookings", "Book a Conference Room", "Admin", "Privacy Policy", "Terms of Use"]
+page_selection = st.sidebar.radio("Go to", pages, index=pages.index(page.capitalize().replace("-", " ")))
+
+# Update the URL with the selected page
+st.experimental_set_query_params(page=page_selection.lower().replace(" ", "-"))
 
 # Email-sending function
 def send_email(user_email, user_name, room, date, start_time, end_time):
