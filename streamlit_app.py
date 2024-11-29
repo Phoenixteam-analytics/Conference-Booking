@@ -391,11 +391,9 @@ elif current_page == "Admin":
             st.write("No bookings found in the system.")
 # Page routing
 elif current_page == "Privacy Policy":
-    st.experimental_set_query_params(page="Privacy Policy")
     st.title(pages[current_page])
     render_html("pages/privacy.html")
 elif current_page == "Terms of Use":
-    st.experimental_set_query_params(page="Terms of Use")
     st.title("Terms of Use")
     render_html("pages/terms.html")
 else:
