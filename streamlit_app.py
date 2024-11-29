@@ -48,18 +48,8 @@ st.markdown("""
         }
     </style>
 """, unsafe_allow_html=True)
-# Function to render HTML files
-def render_html(file_path):
-    try:
-        with open(file_path, "r", encoding="utf-8") as file:
-            content = file.read()
-        st.markdown(content, unsafe_allow_html=True)
-    except FileNotFoundError:
-        st.error("The requested page was not found.")
-
 # Load the bookings from CSV
 BOOKINGS1_FILE = "conference_bookings.csv"
-
 if os.path.exists(BOOKINGS1_FILE):
     bookings_df = pd.read_csv(BOOKINGS1_FILE)
     try:
@@ -77,18 +67,37 @@ else:
 def save_bookings(df):
     df.to_csv(BOOKINGS1_FILE, index=False)
 
-# Sidebar Navigation with Query Parameters
+# Function to render HTML files
+def render_html(file_path):
+    try:
+        with open(file_path, "r", encoding="utf-8") as file:
+            content = file.read()
+        st.markdown(content, unsafe_allow_html=True)
+    except FileNotFoundError:
+        st.error("The requested page was not found.")
+
+# Navigation logic
+pages = {
+    "Home": "Welcome to the Conference Room Booking App",
+    "Book a Conference Room": "Book a Conference Room",
+    "View Bookings": "View Bookings",
+    "Admin": "Admin Dashboard",
+    "Privacy Policy": "Privacy Policy",
+    "Terms of Use": "Terms of Use"
+}
+
+# Get query parameters to determine the active page
 query_params = st.experimental_get_query_params()
-page = query_params.get("page", ["home"])[0]
+current_page = query_params.get("page", ["Home"])[0]  # Default to "Home" if no page is specified
 
 # Sidebar navigation
 st.sidebar.title("Navigation")
-pages = ["Home", "View Bookings", "Book a Conference Room", "Admin", "Privacy Policy", "Terms of Use"]
-page_selection = st.sidebar.radio("Go to", pages, index=pages.index(page.capitalize().replace("-", " ")))
-
-# Update the URL with the selected page
-st.experimental_set_query_params(page=page_selection.lower().replace(" ", "-"))
-
+for page_name in pages:
+    link = f"?page={page_name.replace(' ', '%20')}"
+    if page_name == current_page:
+        st.sidebar.markdown(f"**{page_name}**")
+    else:
+        st.sidebar.markdown(f"[{page_name}]({link})")
 # Email-sending function
 def send_email(user_email, user_name, room, date, start_time, end_time):
     sender_email = "fahmad@phoenixteam.com"
@@ -384,7 +393,10 @@ elif page == "terms-of-use":
     st.title("Terms of Use")
     render_html("pages/terms.html")
 else:
-    st.experimental_set_query_params(page="Home")
-    st.title("Welcome to the Reserve Space App")
-    st.write("Use this app to reserve conference spaces in your organization.")
+    st.title(pages["Home"])
+    st.write("Welcome to the Conference Room Booking App. Use the navigation to explore other features.")
+
+# Footer links
+st.markdown("---")
+st.markdown(f"[Privacy Policy](?page=Privacy%20Policy) | [Terms of Use](?page=Terms%20of%20Use)")
            
