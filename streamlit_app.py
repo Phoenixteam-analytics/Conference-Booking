@@ -162,7 +162,7 @@ def save_bookings(df):
     df.to_csv("conference_bookings.csv", index=False)
 
 # Booking Form Section
-if current_page == "Book a Conference Room":
+if page == "Book a Conference Room":
     st.title(pages[current_page])
     st.write("Book your conference room here!")
     st.image("https://phoenixteam.com/wp-content/uploads/2024/02/Phoenix-Logo.png", width=200)
@@ -252,7 +252,7 @@ if current_page == "Book a Conference Room":
             st.error("⚠️ Please ensure all fields are valid and try again.")
 # Admin Page: View all bookings with a Calendar
 # View Bookings Page
-elif current_page == "View Bookings":
+if page == "View Bookings":
     st.title(pages[current_page])
     st.write("View all bookings by date!")
     st.write("### Conference Booking📆")
@@ -306,7 +306,7 @@ elif current_page == "View Bookings":
 
 # Admin Page: Admin Login for booking management
 # Admin Page: Admin Login for booking management
-elif current_page == "Admin":
+if page == "Admin":
     st.title(pages[current_page])
     st.write("Admin dashboard to manage bookings!")
     # Admin Authentication
