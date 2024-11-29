@@ -393,10 +393,14 @@ elif current_page == "Admin":
 elif current_page == "Privacy Policy":
     st.title(pages[current_page])
     render_html("pages/privacy.html")
+    st.write(f"Current directory: {os.getcwd()}")
+    st.write(f"Privacy HTML path: {os.path.abspath('pages/privacy.html')}")
 elif current_page == "Terms of Use":
     st.experimental_set_query_params(page="Terms of Use")
     st.title("Terms of Use")
     render_html("pages/terms.html")
+    st.write(f"Current directory: {os.getcwd()}")
+    st.write(f"Privacy HTML path: {os.path.abspath('pages/terms.html')}")
 else:
     st.title(pages["Home"])
     st.write("Welcome to the Conference Room Booking App. Use the navigation to explore other features.")
