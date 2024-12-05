@@ -72,12 +72,25 @@ else:
 # Save bookings to the CSV file
 def save_bookings(df):
     df.to_csv(BOOKINGS1_FILE, index=False)
+    
+# Replace with your email and password
+sender_email = "Team@phoenixteam.com"
+sender_password = "Minutes@$"
 
-def send_email(user_email, user_name, room, date, start_time, end_time):
-    sender_email = "team@phoenixteam.com"  # Replace with your email
-    sender_password = os.getenv("Minutes@$")  # Store password securely using environment variables
-    smtp_server = "smtp.office365.com"  # Updated server for Office 365 accounts
-    smtp_port = 587
+# SMTP configuration
+smtp_server = "smtp.office365.com"
+smtp_port = 587
+
+try:
+    with smtplib.SMTP(smtp_server, smtp_port) as server:
+        server.starttls()  # Start TLS encryption
+        server.login(sender_email, sender_password)  # Authenticate
+        print("Authentication successful!")
+except smtplib.SMTPAuthenticationError as e:
+    print(f"SMTPAuthenticationError: {e}")
+except Exception as e:
+    print(f"Error: {e}")
+
 
     subject = "Conference Room Booking Confirmation"
     body = f"""
