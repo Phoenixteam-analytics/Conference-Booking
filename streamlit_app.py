@@ -72,24 +72,6 @@ else:
 # Save bookings to the CSV file
 def save_bookings(df):
     df.to_csv(BOOKINGS1_FILE, index=False)
-    
-# Replace with your email and password
-sender_email = "Team@phoenixteam.com"
-sender_password = "Minutes@$"
-
-# SMTP configuration
-smtp_server = "smtp.office365.com"
-smtp_port = 587
-
-try:
-    with smtplib.SMTP(smtp_server, smtp_port) as server:
-        server.starttls()  # Start TLS encryption
-        server.login(sender_email, sender_password)  # Authenticate
-        print("Authentication successful!")
-except smtplib.SMTPAuthenticationError as e:
-    print(f"SMTPAuthenticationError: {e}")
-except Exception as e:
-    print(f"Error: {e}")
 
 
     subject = "Conference Room Booking Confirmation"
@@ -121,24 +103,25 @@ except Exception as e:
         </body>
     </html>
     """
-    
-    try:
-        # Prepare the email
-        msg = MIMEMultipart()
-        msg["From"] = sender_email
-        msg["To"] = f"{user_email}, team@phoenixteam.com"
-        msg["Subject"] = subject
-        msg.attach(MIMEText(body, "html"))
 
-        # Connect to SMTP server and send the email
-        with smtplib.SMTP(smtp_server, smtp_port) as server:
-            server.starttls()  # Secure the connection
-            server.login(sender_email, sender_password)  # Login with the account password
-            server.send_message(msg)
-        
-        st.success(f"Email confirmation sent to {user_email} and admin.")
-    except Exception as e:
-        st.error(f"Error sending email: {e}")
+# Replace with your email and password
+sender_email = "Team@phoenixteam.com"
+sender_password = "Minutes@$"
+
+# SMTP configuration
+smtp_server = "smtp.office365.com"
+smtp_port = 587
+
+try:
+    with smtplib.SMTP(smtp_server, smtp_port) as server:
+        server.starttls()  # Start TLS encryption
+        server.login(sender_email, sender_password)  # Authenticate
+        print("Authentication successful!")
+except smtplib.SMTPAuthenticationError as e:
+    print(f"SMTPAuthenticationError: {e}")
+except Exception as e:
+    print(f"Error: {e}")
+    
 # Function to validate email format using regex
 # Function to validate email format using regex and domain check
 def is_valid_email(email):
