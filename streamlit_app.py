@@ -115,7 +115,7 @@ def send_email(user_email, user_name, room, date, start_time, end_time):
         # Prepare the email
         msg = MIMEMultipart()
         msg["From"] = sender_email
-        msg["To"] = f"{user_email}, kteja@phoenixteam.com"
+        msg["To"] = f"{user_email}, team@phoenixteam.com"
         msg["Subject"] = subject
         msg.attach(MIMEText(body, "html"))
 
