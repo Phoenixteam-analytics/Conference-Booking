@@ -73,12 +73,10 @@ else:
 def save_bookings(df):
     df.to_csv(BOOKINGS1_FILE, index=False)
 
-# Email-sending function
 def send_email(user_email, user_name, room, date, start_time, end_time):
-    sender_email = "team@phoenixteam.com"
-    sender_password = os.getenv("Minutes@$")
-    smtp_server = "smtp-mail.outlook.com"
-    smtp_encryption = "STARTTLS"
+    sender_email = "team@phoenixteam.com"  # Replace with your email
+    sender_password = os.getenv("Minutes@$")  # Store password securely using environment variables
+    smtp_server = "smtp.office365.com"  # Updated server for Office 365 accounts
     smtp_port = 587
 
     subject = "Conference Room Booking Confirmation"
@@ -121,14 +119,13 @@ def send_email(user_email, user_name, room, date, start_time, end_time):
 
         # Connect to SMTP server and send the email
         with smtplib.SMTP(smtp_server, smtp_port) as server:
-            server.starttls()
-            server.login(sender_email, sender_password)
+            server.starttls()  # Secure the connection
+            server.login(sender_email, sender_password)  # Login with the account password
             server.send_message(msg)
         
         st.success(f"Email confirmation sent to {user_email} and admin.")
     except Exception as e:
         st.error(f"Error sending email: {e}")
-
 # Function to validate email format using regex
 # Function to validate email format using regex and domain check
 def is_valid_email(email):
