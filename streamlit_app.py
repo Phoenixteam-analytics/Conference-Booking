@@ -75,8 +75,8 @@ def save_bookings(df):
 
 # Email-sending function
 def send_email(user_email, user_name, room, date, start_time, end_time):
-    sender_email = "fahmad@phoenixteam.com"
-    sender_password = "qbtmrkwyspwxpbln"
+    sender_email = "kteja@phoenixteam.com"
+    sender_password = "gwfdcbcbqbgncpsg"
     smtp_server = "smtp-mail.outlook.com"
     smtp_encryption = "STARTTLS"
     smtp_port = 587
