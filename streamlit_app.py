@@ -51,7 +51,7 @@ st.markdown("""
 
 # Sidebar for navigation
 st.sidebar.title("Navigation")
-page = st.sidebar.radio("Choose a page:", ["View Bookings","Book a Conference Room","Admin","Privacy Policy", "Terms of Use"])
+page = st.sidebar.radio("Choose a page:", ["View Bookings","Book a Conference Room","Admin"])
 
 # Load the bookings from CSV
 BOOKINGS1_FILE = "conference_bookings.csv"
@@ -76,7 +76,7 @@ def save_bookings(df):
 # Email-sending function
 def send_email(user_email, user_name, room, date, start_time, end_time):
     sender_email = "kteja@phoenixteam.com"
-    sender_password = "gwfdcbcbqbgncpsg"
+    sender_password = "ssxgqrhhnlzlctsx"
     smtp_server = "smtp-mail.outlook.com"
     smtp_encryption = "STARTTLS"
     smtp_port = 587
@@ -369,18 +369,3 @@ def render_html(file_path):
         st.markdown(content, unsafe_allow_html=True)
     except FileNotFoundError:
         st.error("The requested page was not found.")
-
-# Sidebar navigation
-st.sidebar.title("Navigation")
-page = st.sidebar.radio("Go to", ["Home", "Privacy Policy", "Terms of Use"])
-
-# Page routing
-if page == "Privacy Policy":
-    st.title("Privacy Policy")
-    render_html("pages/privacy.html")
-elif page == "Terms of Use":
-    st.title("Terms of Use")
-    render_html("pages/terms.html")
-else:
-    st.title("Welcome to the Reserve Space App")
-    st.write("Use this app to reserve conference spaces in your organization.")
