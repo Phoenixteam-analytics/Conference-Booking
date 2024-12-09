@@ -105,8 +105,8 @@ def save_bookings(df):
     """
 
 # Replace with your email and password
-sender_email = "Team@phoenixteam.com"
-sender_password = "Minutes@$"
+sender_email = "kteja@phoenixteam.com"
+sender_password = "gwfdcbcbqbgncpsg"
 
 # SMTP configuration
 smtp_server = "smtp.office365.com"
