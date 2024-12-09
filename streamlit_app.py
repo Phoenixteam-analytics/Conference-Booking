@@ -51,7 +51,7 @@ st.markdown("""
 
 # Sidebar for navigation
 st.sidebar.title("Navigation")
-page = st.sidebar.radio("Choose a page:", ["View Bookings","Book a Conference Room","Admin","Privacy Policy", "Terms of Use"])
+page = st.sidebar.radio("Choose a page:", ["View Bookings","Book a Conference Room","Admin"])
 
 # Load the bookings from CSV
 BOOKINGS1_FILE = "conference_bookings.csv"
@@ -75,8 +75,8 @@ def save_bookings(df):
 
 # Email-sending function
 def send_email(user_email, user_name, room, date, start_time, end_time):
-    sender_email = "fahmad@phoenixteam.com"
-    sender_password = "qbtmrkwyspwxpbln"
+    sender_email = "teja@phoenixteam.com"
+    sender_password = "gwfdcbcbqbgncpsg"
     smtp_server = "smtp-mail.outlook.com"
     smtp_encryption = "STARTTLS"
     smtp_port = 587
@@ -357,18 +357,4 @@ if page == "Admin":
                 st.session_state.authenticated = False
                 st.success("Logged out successfully.")
         else:
-            st.write("No bookings found in the system.")
-# Load and display content based on navigation
-if page == "Privacy Policy":
-    st.title("Privacy Policy")
-    # Load and render the Privacy Policy HTML
-    with open("privacy.html", "r") as f:
-        privacy_content = f.read()
-    components.html(privacy_content, height=800, scrolling=True)
-    
-if page == "Terms of Use":
-    st.title("Terms of Use")
-    # Load and render the Terms of Use HTML
-    with open("terms.html", "r") as f:
-        terms_content = f.read()
-    components.html(terms_content, height=800, scrolling=True)               
+            st.write("No bookings found in the system.")             
