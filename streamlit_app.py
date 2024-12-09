@@ -51,7 +51,7 @@ st.markdown("""
 
 # Sidebar for navigation
 st.sidebar.title("Navigation")
-page = st.sidebar.radio("Choose a page:", ["View Bookings","Book a Conference Room","Admin"])
+page = st.sidebar.radio("Choose a page:", ["View Bookings","Book a Conference Room","Admin","Privacy Policy", "Terms of Use"])
 
 # Load the bookings from CSV
 BOOKINGS1_FILE = "conference_bookings.csv"
@@ -73,6 +73,13 @@ else:
 def save_bookings(df):
     df.to_csv(BOOKINGS1_FILE, index=False)
 
+# Email-sending function
+def send_email(user_email, user_name, room, date, start_time, end_time):
+    sender_email = "fahmad@phoenixteam.com"
+    sender_password = "qbtmrkwyspwxpbln"
+    smtp_server = "smtp-mail.outlook.com"
+    smtp_encryption = "STARTTLS"
+    smtp_port = 587
 
     subject = "Conference Room Booking Confirmation"
     body = f"""
@@ -103,25 +110,25 @@ def save_bookings(df):
         </body>
     </html>
     """
-
-# Replace with your email and password
-sender_email = "kteja@phoenixteam.com"
-sender_password = "gwfdcbcbqbgncpsg"
-
-# SMTP configuration
-smtp_server = "smtp.office365.com"
-smtp_port = 587
-
-try:
-    with smtplib.SMTP(smtp_server, smtp_port) as server:
-        server.starttls()  # Start TLS encryption
-        server.login(sender_email, sender_password)  # Authenticate
-        print("Authentication successful!")
-except smtplib.SMTPAuthenticationError as e:
-    print(f"SMTPAuthenticationError: {e}")
-except Exception as e:
-    print(f"Error: {e}")
     
+    try:
+        # Prepare the email
+        msg = MIMEMultipart()
+        msg["From"] = sender_email
+        msg["To"] = f"{user_email}, kteja@phoenixteam.com"
+        msg["Subject"] = subject
+        msg.attach(MIMEText(body, "html"))
+
+        # Connect to SMTP server and send the email
+        with smtplib.SMTP(smtp_server, smtp_port) as server:
+            server.starttls()
+            server.login(sender_email, sender_password)
+            server.send_message(msg)
+        
+        st.success(f"Email confirmation sent to {user_email} and admin.")
+    except Exception as e:
+        st.error(f"Error sending email: {e}")
+
 # Function to validate email format using regex
 # Function to validate email format using regex and domain check
 def is_valid_email(email):
@@ -362,3 +369,20 @@ def render_html(file_path):
         st.markdown(content, unsafe_allow_html=True)
     except FileNotFoundError:
         st.error("The requested page was not found.")
+
+# Sidebar navigation
+st.sidebar.title("Navigation")
+page = st.sidebar.radio("Go to", ["Home", "Privacy Policy", "Terms of Use"])
+
+# Page routing
+if page == "Privacy Policy":
+    st.title("Privacy Policy")
+    render_html("pages/privacy.html")
+elif page == "Terms of Use":
+    st.title("Terms of Use")
+    render_html("pages/terms.html")
+else:
+    st.title("Welcome to the Reserve Space App")
+    st.write("Use this app to reserve conference spaces in your organization.")
+
+this is my streamlit app now in this app if i select one page it should appear in url as well
