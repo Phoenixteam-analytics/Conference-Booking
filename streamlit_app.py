@@ -371,4 +371,4 @@ if page == "Terms of Use":
     # Load and render the Terms of Use HTML
     with open("terms.html", "r") as f:
         terms_content = f.read()
-    components.html(terms_content, height=800, scrolling=True)         
+    components.html(terms_content, height=800, scrolling=True)               
