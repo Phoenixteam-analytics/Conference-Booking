@@ -384,5 +384,3 @@ elif page == "Terms of Use":
 else:
     st.title("Welcome to the Reserve Space App")
     st.write("Use this app to reserve conference spaces in your organization.")
-
-this is my streamlit app now in this app if i select one page it should appear in url as well
