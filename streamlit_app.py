@@ -249,7 +249,7 @@ if page == "Book a Conference Room":
 # Admin Page: View all bookings with a Calendar
 # View Bookings Page
 if page == "View Bookings":
-    st.write("### Conference Booking📆")
+    st.write("### Reserve Space 📆")
     st.image("https://backdocket.com/wp-content/uploads/2020/01/About-icon.gif")
     st.write("### View Bookings by Date")
     
