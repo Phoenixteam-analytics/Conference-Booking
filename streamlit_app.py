@@ -7,6 +7,7 @@ from email.mime.multipart import MIMEMultipart
 import os
 import re
 import streamlit.components.v1 as components
+from streamlit_gsheets import GSheetsConnection
 
 # Admin credentials
 ADMIN_USERNAME = "admin"
@@ -54,9 +55,16 @@ st.sidebar.title("Navigation")
 page = st.sidebar.radio("Choose a page:", ["View Bookings","Book a Conference Room","Admin"])
 
 # Load the bookings from CSV
-BOOKINGS1_FILE = "conference_bookings.csv"
+# BOOKINGS1_FILE = "conference_bookings.csv"
+conn = st.connection("gsheets", type=GSheetsConnection)
 
-if os.path.exists(BOOKINGS1_FILE):
+df = conn.read()
+
+# Print results.
+for row in df.itertuples():
+    st.write(f"{row.name} has a :{row.pet}:")
+
+if os.path.exists(BOOKINGS1_FILE.conn):
     bookings_df = pd.read_csv(BOOKINGS1_FILE)
     try:
         bookings_df["Date"] = pd.to_datetime(bookings_df["Date"], errors="coerce").dt.date
@@ -71,7 +79,7 @@ else:
 
 # Save bookings to the CSV file
 def save_bookings(df):
-    df.to_csv(BOOKINGS1_FILE, index=False)
+    df.to_csv(BOOKINGS1_FILE.conn, index=False)
 
 # Email-sending function
 def send_email(user_email, user_name, room, date, start_time, end_time):
