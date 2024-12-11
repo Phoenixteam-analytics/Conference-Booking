@@ -1,0 +1,7 @@
+#requirements.txt
+snowflake-snowpark-python
+streamlit
+datetime
+pandas
+requests
+st-gsheets-connection
